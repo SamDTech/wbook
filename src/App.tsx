@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as esbuild from "esbuild-wasm";
+import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 
 const App = () => {
   const [input, setInput] = useState("");
@@ -19,10 +20,19 @@ const App = () => {
     startService();
   }, []);
 
-  const onClick = () => {
+  const onClick = async () => {
     if (!ref.current) return;
 
-    console.log(ref.current);
+   const result = await ref.current.build({
+       entryPoints: ['index.js'],
+       bundle: true,
+       write: false,
+       plugins: [unpkgPathPlugin()]
+   })
+
+   //console.log(result);
+
+    setCode(result.outputFiles[0].text);
   };
   return (
     <div>
