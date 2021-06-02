@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useState } from "react";
 
 const App = () => {
-    return (
-        <div>
-            hi
-        </div>
-    )
-}
+  const [input, setInput] = useState("");
+  const [code, setCode] = useState("");
 
-export default App
+  const onClick = () =>{
+      console.log(input);
+  }
+  return (
+    <div>
+      <textarea
+        name="input"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      ></textarea>
+      <div>
+        <button onClick={onClick}>Submit</button>
+      </div>
+
+      <pre>{code}</pre>
+    </div>
+  );
+};
+
+export default App;
