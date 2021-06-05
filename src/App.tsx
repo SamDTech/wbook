@@ -9,6 +9,7 @@ const App = () => {
 
   // create ref
   const ref = useRef<any>();
+  const iframeRef = useRef<any>();
 
   const startService = async () => {
     ref.current = await esbuild.startService({
@@ -35,12 +36,29 @@ const App = () => {
       },
     });
 
-    //console.log(result);
+    //    setCode(result.outputFiles[0].text);
 
-    setCode(result.outputFiles[0].text);
+    iframeRef.current.contentWindow.postMessage(
+      result.outputFiles[0].text,
+      '*'
+    );
   };
 
-  const html = `<script>${code}</script>`;
+  const html = `
+    <html>
+    <head></head>
+      <body>
+      <div id='root'></div>
+
+      <script>
+        window.addEventListener('message', (event) =>{
+         eval(event.data)
+        }, false)
+      </script>
+      </body>
+    </html>
+
+  `;
 
   return (
     <div>
@@ -55,7 +73,7 @@ const App = () => {
 
       <pre>{code}</pre>
 
-      <iframe srcDoc={html} sandbox='allow scripts' />
+      <iframe srcDoc={html} sandbox='allow-scripts' ref={iframeRef} />
     </div>
   );
 };
