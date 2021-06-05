@@ -25,6 +25,8 @@ const App = () => {
   const onClick = async () => {
     if (!ref.current) return;
 
+    iframeRef.current.srcDoc = html;
+
     const result = await ref.current.build({
       entryPoints: ['index.js'],
       bundle: true,
@@ -51,9 +53,15 @@ const App = () => {
       <div id='root'></div>
 
       <script>
-        window.addEventListener('message', (event) =>{
+        try{
+          window.addEventListener('message', (event) =>{
          eval(event.data)
         }, false)
+        }catch(error){
+          const root = document.querySelector('#root')
+
+          root.innerHTML =
+        }
       </script>
       </body>
     </html>
