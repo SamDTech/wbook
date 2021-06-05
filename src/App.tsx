@@ -78,8 +78,12 @@ const App = () => {
         <button onClick={onClick}>Submit</button>
       </div>
 
-
-      <iframe title='preview' srcDoc={html} sandbox='allow-scripts' ref={iframeRef} />
+      <iframe
+        title='preview'
+        srcDoc={html}
+        sandbox='allow-scripts'
+        ref={iframeRef}
+      />
     </div>
   );
 };
