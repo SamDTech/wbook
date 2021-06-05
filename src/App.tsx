@@ -5,7 +5,6 @@ import { fetchPlugin } from './plugins/fetch-plugin';
 
 const App = () => {
   const [input, setInput] = useState('');
-  const [code, setCode] = useState('');
 
   // create ref
   const ref = useRef<any>();
@@ -60,7 +59,7 @@ const App = () => {
         }catch(error){
           const root = document.querySelector('#root')
 
-          root.innerHTML =
+          root.innerHTML = '<div style="color: red"><h4>Runtime Error</h4>error</div>'
         }
       </script>
       </body>
@@ -79,9 +78,8 @@ const App = () => {
         <button onClick={onClick}>Submit</button>
       </div>
 
-      <pre>{code}</pre>
 
-      <iframe srcDoc={html} sandbox='allow-scripts' ref={iframeRef} />
+      <iframe title='preview' srcDoc={html} sandbox='allow-scripts' ref={iframeRef} />
     </div>
   );
 };
